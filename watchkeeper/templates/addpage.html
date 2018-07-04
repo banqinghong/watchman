@@ -3,10 +3,31 @@
 <head>
     <meta charset="utf-8">
     <title>值班表管理</title>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css" />
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
+
+<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+<script type="text/javascript">window.__admin_utc_offset__ = "28800";</script>
+
+<meta name="robots" content="NONE,NOARCHIVE" />
 </head>
-<body>
-<a href="/admin">后台管理</a><br>
-----------------------------------------------<br>
+
+<body class=" dashboard">
+<div id="caontainer">
+    <div id="header">
+        <div id="branding">
+<h1 id="site-name"><a href="/admin/">盼达值班系统</a> </h1>
+        </div>
+        <div id="user-tools">
+            <a href="/admin">人员管理</a> /
+            <a href="/addpage">值班表管理</a>
+        </div>
+    </div>
+</div>
+<br>
+
+
 {%comment%}
 <b> 添加值班人员</b>
 <form action="/addwatchkeeper/" method="POST">
