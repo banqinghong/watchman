@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>值班表管理</title>
+</head>
+<body>
+<a href="/admin">后台管理</a><br>
+----------------------------------------------<br>
+{%comment%}
+<b> 添加值班人员</b>
+<form action="/addwatchkeeper/" method="POST">
+    姓名: <input type="text" name="name">
+    电话: <input type="text" name="phone">
+    <input type="submit" value="提交">
+</form>
+<br>----------------------------------------<br>
+{%endcomment%}
+<b>查看值班表</b>
+<form action="/listwatch/" method="POST">
+    年份: <input type="text" name="year">
+    月份: <input type="text" name="month">
+    <input type="submit" value="提交">
+</form>
+<br>----------------------------------------<br>
+<b>删除值班表</b>
+<form action="/deletelist/" method="POST">
+    年份: <input type="text" name="year">
+    月份: <input type="text" name="month">
+    <input type="submit" value="删除">
+</form>
+<br>----------------------------------------<br>
+<b>值班表生成</b>
+<form action="/addwatchlist/" method="POST">
+    年份: <input type="text" name="year">
+    月份: <input type="text" name="month">
+    值班起始人编号:<input type="text" name="num">
+    <input type="submit" value="提交">
+</form>
+<br>-----------------------------------------<br>
+{%comment%}
+<b> 删除值班人员</b>
+<form action="/delwatchkeeper/" method="POST">
+    姓名: <input type="text" name="name">
+    <input type="submit" value="提交">
+</form>
+<br>----------------------------------------<br>
+{%endcomment%}
+<b>值班人员如下：</b><br>
+{%for name in namelist %}
+    {{name}}<br>
+{% endfor %}
+<!{{namelist}}>
+</body>
+</html>

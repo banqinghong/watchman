@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加成功</title>
+</head>
+<a href="/admin">后台管理</a>   <a href="/addpage">值班表管理</a><br>
+----------------------------------------------<br>
+{{year}}年{{month}}月值班表添加成功
+<br>
+{% for key in namelist %}
+{{key}},
+{% endfor %}
+<br>---------------------------------------
+
+
+<table width="60%" border="1" cellspacing="1" cellpadding="4" align="center">
+<tr>
+  <td>星期一</td>
+  <td>星期二</td>
+  <td>星期三</td>
+  <td>星期四</td>
+  <td>星期五</td>
+  <td>星期六</td>
+  <td>星期日</td>
+</tr>
+  <tr>
+  {% for key in nameList %}
+  {% if key == "space" %}<td>&nbsp;</td>
+    {% elif key == "enter" %} </tr><tr>
+  {% else %} <td>{{ key }}</td>
+  {% endif %}
+  {% endfor %}
+</tr>
+</table>
+</body>
+</html>

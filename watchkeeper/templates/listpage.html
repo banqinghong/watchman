@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>盼达值班表</title>
+</head>
+<body>
+<a href="/admin">后台管理</a>   <a href="/checklist">值班表查看</a><br>
+-----------------------------------
+{{result}}
+<table width="100%" border="0" cellspacing="0" cellpadding="0" align="left">
+   <td align="center" class="biaoti" height="60">{{year}}年{{month}}月值班表</td>
+</table>
+
+<table width="60%" border="1" cellspacing="1" cellpadding="4" align="center">
+<tr>
+  <td>星期一</td>
+  <td>星期二</td>
+  <td>星期三</td>
+  <td>星期四</td>
+  <td>星期五</td>
+  <td>星期六</td>
+  <td>星期日</td>
+</tr>
+  <tr>
+  {% for key in nameList %}
+  {% if key == "space" %}<td>&nbsp;</td>
+    {% elif key == "enter" %} </tr><tr>
+  {% else %} <td>{{ key }}</td>
+  {% endif %}
+  {% endfor %}
+</tr>
+</table>
+{%comment%}
+<br>-----------------------------------------
+<p>查看值班表<p>
+<form action="/listwatch/" method="POST">
+    年份: <input type="text" name="year">
+    月份: <input type="text" name="month">
+    <input type="submit" value="提交">
+</form>
+
+{%endcomment%}
+</body>
+</html>
