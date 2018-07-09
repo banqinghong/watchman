@@ -50,7 +50,8 @@ class serverInfo(models.Model):
         (role_lab, 'lab环境'),
         (role_pd, '生产环境')
     )
-    ip = models.GenericIPAddressField(verbose_name='ip地址')
+    ip = models.GenericIPAddressField(verbose_name='IP地址')
+    innerip = models.GenericIPAddressField(default='127.0.0.1',  null=True,  blank=True, verbose_name='内网IP')
     nickname = models.CharField(verbose_name='别名', max_length=20)
     service = models.TextField(verbose_name='运行服务')
     cpu = models.IntegerField(verbose_name='CPU(核)')
