@@ -21,8 +21,8 @@ class watchkeeper(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = '运维人员'
-        verbose_name_plural = '运维人员'
+        verbose_name = '人员管理'
+        verbose_name_plural = '人员管理'
 
 
 class ServiceInfo(models.Model):
@@ -33,8 +33,19 @@ class ServiceInfo(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = '服务'
-        verbose_name_plural = '服务'
+        verbose_name = '服务管理'
+        verbose_name_plural = '服务管理'
+
+
+class RunEnv(models.Model):
+    env_name = models.CharField(default="stage", blank=True, verbose_name='运行环境', max_length=30)
+
+    def __unicode__(self):
+        return self.env_name
+
+    class Meta:
+        verbose_name = '环境管理'
+        verbose_name_plural = '环境管理'
 
 
 class watchlist(models.Model):
@@ -52,16 +63,6 @@ class watchlist(models.Model):
 
 
 class serverInfo(models.Model):
-    role_default = 'dev'
-    role_stage = 'stage'
-    role_lab = 'lab'
-    role_pd = 'pd'
-    role_choice = (
-        (role_default, '开发环境'),
-        (role_stage, 'stage环境'),
-        (role_lab, 'lab环境'),
-        (role_pd, '生产环境')
-    )
     ip = models.GenericIPAddressField(verbose_name='IP地址')
     innerip = models.GenericIPAddressField(default='127.0.0.1', null=True, blank=True, verbose_name='内网IP')
     nickname = models.CharField(verbose_name='别名', max_length=20)
@@ -70,14 +71,15 @@ class serverInfo(models.Model):
     cpu = models.IntegerField(verbose_name='CPU(核)')
     mem = models.IntegerField(verbose_name='内存（G）')
     system = models.TextField(verbose_name='操作系统')
-    role = models.CharField(default=role_default, choices=role_choice, verbose_name='所属环境', max_length=20)
+    role = models.ForeignKey(RunEnv, default="", blank=True, verbose_name=u'运行环境', max_length=20)
 
     class Meta:
-        verbose_name = '主机'
-        verbose_name_plural = '主机'
+        verbose_name = '主机管理'
+        verbose_name_plural = '主机管理'
 
     def get_service(self):
         return ",".join([p.name for p in self.service.all()])
+
     get_service.short_description = '运行服务'
 
     def __unicode__(self):
