@@ -2,7 +2,7 @@
 from django.contrib import admin
 from models import watchkeeper, serverInfo, ServiceInfo, RunEnv
 
-admin.site.site_header = '盼达值班系统'
+admin.site.site_header = '盼达运维系统'
 admin.site.site_title = '盼达'
 
 
