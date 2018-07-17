@@ -1,6 +1,6 @@
 # _*_ coding:utf-8 _*_
 from django.contrib import admin
-from models import watchkeeper, serverInfo, ServiceInfo, RunEnv
+from models import watchkeeper, serverInfo, ServiceInfo, RunEnv,GroupManage
 
 
 admin.site.site_header = '盼达运维系统'
@@ -9,8 +9,9 @@ admin.site.site_title = '盼达'
 
 @admin.register(watchkeeper)
 class opslist(admin.ModelAdmin):
-    list_display = ('name', 'phone', 'email', 'qq', 'tag')
+    list_display = ('name', 'phone', 'email', 'qq', 'group', 'tag')
     model_name = '值班人员'
+    list_filter = ('group', 'tag')
 
 
 @admin.register(RunEnv)
@@ -24,12 +25,17 @@ class envlist(admin.ModelAdmin):
     get_role_num.short_description = '服务器数量'
 
 
+@admin.register(GroupManage)
+class GroupList(admin.ModelAdmin):
+    list_display = ('group_name',)
+
+
 @admin.register(serverInfo)
 class serverList(admin.ModelAdmin):
     list_display = ('nickname', 'ip', 'innerip', 'get_service', 'cpu', 'mem', 'role')
     # fields = ('ip', 'innerip', 'service')
     filter_horizontal = ('service',)
-    raw_id_fields = ('role',)
+    #raw_id_fields = ('role',)
     list_filter = ('role', 'cpu', 'mem')
     search_fields = ('ip', 'nickname', 'service__name')
 

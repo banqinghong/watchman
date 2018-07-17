@@ -3,6 +3,16 @@ from django.db import models
 
 
 # Create your models here.
+class GroupManage(models.Model):
+    group_name = models.CharField(default="", blank=True, verbose_name='组名', max_length=30)
+
+    def __unicode__(self):
+        return self.group_name
+
+    class Meta:
+        verbose_name = '组织管理'
+        verbose_name_plural = '组织管理'
+
 
 class watchkeeper(models.Model):
     tag_default = 0
@@ -15,6 +25,7 @@ class watchkeeper(models.Model):
     phone = models.CharField(verbose_name='电话', blank=True, max_length=11, default="")
     qq = models.CharField(verbose_name='QQ号', blank=True, max_length=13, default="")
     email = models.EmailField(verbose_name='邮箱', blank=True, default="")
+    group = models.ForeignKey(GroupManage, default="", blank=True, verbose_name=u'所属组织', max_length=20)
     tag = models.IntegerField(default=tag_default, choices=tag_choice, verbose_name='是否需要值班')
 
     def __unicode__(self):
@@ -46,6 +57,7 @@ class RunEnv(models.Model):
     class Meta:
         verbose_name = '环境管理'
         verbose_name_plural = '环境管理'
+
 
 
 class watchlist(models.Model):
