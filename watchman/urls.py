@@ -16,16 +16,17 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from watchkeeper import views as myviews
+from watchkeeper import configManage as myconfig
 
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^addpage$',myviews.addPage,name='addpage'),
-    url(r'^addwatchkeeper/$',myviews.addwatchman,name='addwatchkeeper'),
-    url(r'^addwatchlist/$',myviews.addwatchlist,name='addwatchlist'),
-    url(r'^listwatch/$',myviews.listwatchman,name='listwatch'),
-    url(r'^checklist/$',myviews.checklist,name='listwatch'),
-    url(r'^deletelist/$',myviews.deletelist,name='listwatch'),
-    url(r'^delwatchkeeper/$',myviews.delwatchman,name='delwatchkeeper'),
-    url(r'^$',myviews.checklist,name='index'),
+    url(r'^addpage$', myviews.addPage, name='addpage'),
+    url(r'^addwatchkeeper/$', myviews.addwatchman, name='addwatchkeeper'),
+    url(r'^addwatchlist/$', myviews.addwatchlist, name='addwatchlist'),
+    url(r'^listwatch/$', myviews.listwatchman, name='listwatch'),
+    url(r'^checklist/$', myviews.checklist, name='listwatch'),
+    url(r'^deletelist/$', myviews.deletelist, name='listwatch'),
+    url(r'^delwatchkeeper/$', myviews.delwatchman, name='delwatchkeeper'),
+    url(r'^$', myviews.checklist, name='index'),
 ]
