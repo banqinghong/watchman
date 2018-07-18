@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>添加成功</title>
+  <meta charset="utf-8">
+  <title>盼达值班表</title>
+  <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+  <link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css" />
+  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
+
+  <script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+  <script type="text/javascript">window.__admin_utc_offset__ = "28800";</script>
+
+  <meta name="robots" content="NONE,NOARCHIVE" />
 </head>
-<a href="/admin">后台管理</a>   <a href="/addpage">值班表管理</a><br>
+
+<body class=" dashboard">
+<div id="caontainer">
+  <div id="header">
+    <div id="branding">
+      <h1 id="site-name"><a href="/admin/">盼达值班系统</a> </h1>
+    </div>
+    <div id="user-tools">
+      <a href="/admin">运维管理</a> /
+      <a href="/checklist">值班表查看</a>
+    </div>
+  </div>
+</div>
+<br>
 ----------------------------------------------<br>
 {{year}}年{{month}}月值班表添加成功
 <br>
 {% for key in namelist %}
 {{key}},
 {% endfor %}
-<br>---------------------------------------
 
 
 <table width="60%" border="1" cellspacing="1" cellpadding="4" align="center">
@@ -23,6 +43,7 @@
   <td>星期五</td>
   <td>星期六</td>
   <td>星期日</td>
+    <td> 绿洲值班人员</td>
 </tr>
   <tr>
   {% for key in nameList %}

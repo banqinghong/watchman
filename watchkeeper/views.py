@@ -14,13 +14,11 @@ def acc_login(request):
 
 @login_required
 def addPage(request):
-    namelist = watchkeeper.objects.values_list('name').filter(tag=0).order_by('id')
-    namelist_sort = []
-    for i in range(len(namelist)):
-        # namestr = str(namelist[i])
-        new = "%d---->%s" % (i + 1, namelist[i][0])
-        namelist_sort.append(new)
-    return render(request, 'addpage.html', {'namelist': namelist_sort})
+    namelist = watchkeeper.objects.filter(group_id=1, tag=0).values_list('name', 'phone').order_by('id')
+    namelist_lvzhou = watchkeeper.objects.filter(group_id=2, tag=0).values_list('name', 'phone').order_by('id')
+    namedict_lv = dict(namelist_lvzhou)
+    namedict = dict(namelist)
+    return render(request, 'addpage.html', {'namelist': namedict, 'namelist_lvzhou': namedict_lv})
 
 
 @login_required
@@ -35,19 +33,22 @@ def addwatchman(request):
 def listwatchman(request):
     year = request.POST.get('year')
     month = request.POST.get('month')
-    namelist = watchlist.objects.filter(month=month, year=year).values_list('name', flat=True).order_by('id')
-    return render(request, 'listpage.html', {'nameList': namelist, 'year': year, 'month': month})
+    watch_list = watchlist.objects.filter(month=month, year=year).values_list('name', flat=True).order_by('id')
+    namelist_lvzhou = watchkeeper.objects.filter(group_id=2, tag=0).values_list('name', 'phone').order_by('id')
+    namelist = watchkeeper.objects.filter(group_id=1, tag=0).values_list('name', 'phone').order_by('id')
+    namedict = dict(namelist)
+    namedict_lv = dict(namelist_lvzhou)
+    return render(request, 'listpage.html', {'nameList': watch_list, 'namelist': namedict,  'namelist_lvzhou': namedict_lv, 'year': year, 'month': month})
 
 
 @login_required
 def checklist(request):
-    namelist = watchkeeper.objects.values_list('name').filter(tag=0).order_by('id')
-    namelist_sort = []
-    for i in range(len(namelist)):
-        # namestr = str(namelist[i])
-        new = "%d---->%s" % (i + 1, namelist[i][0])
-        namelist_sort.append(new)
-    return render(request, 'check.html', {'namelist': namelist_sort})
+    namelist = watchkeeper.objects.filter(group_id=1, tag=0).values_list('name', 'phone').order_by('id')
+    namelist_lvzhou = watchkeeper.objects.filter(group_id=2, tag=0).values_list('name', 'phone').order_by('id')
+    namedict_lv = dict(namelist_lvzhou)
+    namedict = dict(namelist)
+
+    return render(request, 'check.html', {'namelist': namedict, 'namelist_lvzhou': namedict_lv})
 
 
 @login_required
@@ -73,7 +74,10 @@ def addwatchlist(request):
     year = int(str(year_post))
     num_post = request.POST.get('num')
     num = int(str(num_post))
-    namelist = watchkeeper.objects.values_list('name').filter(tag=0).order_by('id')
+    num_post_lv  = request.POST.get('num_lv')
+    num_lv = int(str(num_post_lv))
+    namelist = watchkeeper.objects.values_list('name').filter(group_id=1, tag=0).order_by('id')
+    namelist_lvzhou = watchkeeper.objects.filter(group_id=2, tag=0).values_list('name', flat=True).order_by('id')
     monthList = calendar.monthcalendar(year, month)
     namelist_list = watchlist.objects.filter(month=month, year=year).values_list('name', flat=True).order_by('id')
     if len(namelist_list) == 0:
@@ -92,6 +96,14 @@ def addwatchlist(request):
                         new = "%s--->%s" % (monthList[i][j], name)
                         watchlist.objects.update_or_create(year=year, day=monthList[i][j], month=month, name=new)
                         num = 1
+            if num_lv < len(namelist_lvzhou):
+                name_lv = namelist_lvzhou[num_lv-1]
+                watchlist.objects.update_or_create(year=year, day=monthList[i][j], month=month, name=name_lv)
+                num_lv += 1
+            else:
+                name_lv = namelist_lvzhou[num_lv-1]
+                watchlist.objects.update_or_create(year=year, day=monthList[i][j], month=month, name=name_lv)
+                num_lv = 1
             watchlist.objects.create(year=year, day=monthList[i][j], month=month, name='enter')
         namelist_success = watchlist.objects.filter(month=month, year=year).values_list('name', flat=True).order_by(
             'id')

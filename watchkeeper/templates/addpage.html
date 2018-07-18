@@ -55,7 +55,8 @@
 <form action="/addwatchlist/" method="POST">
     年份: <input type="text" name="year">
     月份: <input type="text" name="month">
-    值班起始人编号:<input type="text" name="num">
+    小盼值班起始人编号:<input type="text" name="num">
+    绿洲值班起始人编号:<input type="text" name="num_lv">
     <input type="submit" value="提交">
 </form>
 <br>-----------------------------------------<br>
@@ -67,10 +68,18 @@
 </form>
 <br>----------------------------------------<br>
 {%endcomment%}
-<b>值班人员如下：</b><br>
-{%for name in namelist %}
-    {{name}}<br>
-{% endfor %}
-<!{{namelist}}>
+<p>小盼值班人员信息：<p>
+<ol>
+    {%for name,phone in namelist.items %}
+    <li>{{name}}:{{phone}}</li>
+    {% endfor %}
+</ol>
+<br>-----------------------------------------
+<p>绿洲值班人员信息：<p>
+<ol>
+    {%for name_lv,phone_lv in namelist_lvzhou.items %}
+    <li>{{name_lv}}:{{phone_lv}}</li>
+    {% endfor %}
+</ol>
 </body>
 </html>

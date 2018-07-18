@@ -41,16 +41,31 @@
   <td>星期五</td>
   <td>星期六</td>
   <td>星期日</td>
+    <td> 绿洲值班人员</td>
 </tr>
-  <tr>
   {% for key in nameList %}
-  {% if key == "space" %}<td>&nbsp;</td>
-    {% elif key == "enter" %} </tr><tr>
-  {% else %} <td>{{ key }}</td>
-  {% endif %}
+      {% if key == "space" %}<td>&nbsp;</td>
+      {% elif key == "enter" %}</tr><tr>
+      {% else %} <td>{{ key }}</td>
+      {% endif %}
   {% endfor %}
 </tr>
 </table>
+
+<br>-----------------------------------------
+<p>小盼值班人员信息：<p>
+<ol>
+    {%for name,phone in namelist.items %}
+    <li>{{name}}:{{phone}}</li>
+    {% endfor %}
+</ol>
+<br>-----------------------------------------
+<p>绿洲值班人员信息：<p>
+<ol>
+    {%for name_lv,phone_lv in namelist_lvzhou.items %}
+    <li>{{name_lv}}:{{phone_lv}}</li>
+    {% endfor %}
+</ol>
 {%comment%}
 <br>-----------------------------------------
 <p>查看值班表<p>
