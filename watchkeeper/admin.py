@@ -10,14 +10,14 @@ admin.site.site_url = '/checklist'
 
 @admin.register(watchkeeper)
 class opslist(admin.ModelAdmin):
-    list_display = ('name', 'phone', 'email', 'qq', 'group', 'tag')
+    list_display = ('name', 'phone', 'email', 'qq', 'group', 'tag', 'comment')
     model_name = '值班人员'
     list_filter = ('group', 'tag')
 
 
 @admin.register(RunEnv)
 class envlist(admin.ModelAdmin):
-    list_display = ('env_name', 'get_role_num')
+    list_display = ('env_name', 'get_role_num', 'comment')
 
     def get_role_num(self, id):
         num = serverInfo.objects.filter(role_id=id)
@@ -28,19 +28,22 @@ class envlist(admin.ModelAdmin):
 
 @admin.register(GroupManage)
 class GroupList(admin.ModelAdmin):
-    list_display = ('group_name',)
+    list_display = ('group_name', 'comment')
 
 
 @admin.register(serverInfo)
 class serverList(admin.ModelAdmin):
-    list_display = ('nickname', 'ip', 'innerip', 'get_service', 'cpu', 'mem', 'role')
+    list_display = ('nickname', 'ip', 'innerip', 'get_service', 'cpu', 'mem', 'system', 'role', 'comment')
     # fields = ('ip', 'innerip', 'service')
     filter_horizontal = ('service',)
     #raw_id_fields = ('role',)
-    list_filter = ('role', 'cpu', 'mem')
+    list_filter = ('role', )
     search_fields = ('ip', 'nickname', 'service__name')
+    list_per_page = 15
 
 
 @admin.register(ServiceInfo)
 class ServiceList(admin.ModelAdmin):
-    list_display = ('nickname', 'name', 'packgeName')
+    list_display = ('name', 'nickname', 'packgeName', 'comment')
+    list_per_page = 15
+    search_fields = ('name', 'nickname')
