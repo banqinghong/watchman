@@ -21,7 +21,7 @@
         </div>
         <div id="user-tools">
             <a href="/admin">运维管理</a> /
-            <a href="/addpage">值班表管理</a>
+            <a href="/checklist">值班表查看</a>
         </div>
     </div>
 </div>
@@ -70,16 +70,17 @@
 {%endcomment%}
 <p>小盼值班人员信息：<p>
 <ol>
-    {%for name,phone in namelist.items %}
-    <li>{{name}}:{{phone}}</li>
+    {%for name in namelist %}
+    <li>{{name}}</li>
     {% endfor %}
 </ol>
 <br>-----------------------------------------
 <p>绿洲值班人员信息：<p>
 <ol>
-    {%for name_lv,phone_lv in namelist_lvzhou.items %}
-    <li>{{name_lv}}:{{phone_lv}}</li>
+    {%for name_lv in namelist_lvzhou %}
+    <li>{{name_lv}}</li>
     {% endfor %}
+</ol>
 </ol>
 </body>
 </html>

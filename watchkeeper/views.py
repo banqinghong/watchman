@@ -12,13 +12,22 @@ def acc_login(request):
     return render(request, 'login.html')
 
 
+def get_name_phone(name_phone_list):
+    name_phone_result = []
+    for i in range(len(name_phone_list)):
+        name_phone_link = name_phone_list[i][0] + ':' + name_phone_list[i][1]
+        name_phone_result.append(name_phone_link)
+    return name_phone_result
+
+
+
 @login_required
 def addPage(request):
     namelist = watchkeeper.objects.filter(group_id=1, tag=0).values_list('name', 'phone').order_by('id')
     namelist_lvzhou = watchkeeper.objects.filter(group_id=2, tag=0).values_list('name', 'phone').order_by('id')
-    namedict_lv = dict(namelist_lvzhou)
-    namedict = dict(namelist)
-    return render(request, 'addpage.html', {'namelist': namedict, 'namelist_lvzhou': namedict_lv})
+    name_phone = get_name_phone(namelist)
+    name_phone_lv = get_name_phone(namelist_lvzhou)
+    return render(request, 'addpage.html', {'namelist': name_phone, 'namelist_lvzhou': name_phone_lv})
 
 
 @login_required
@@ -36,19 +45,19 @@ def listwatchman(request):
     watch_list = watchlist.objects.filter(month=month, year=year).values_list('name', flat=True).order_by('id')
     namelist_lvzhou = watchkeeper.objects.filter(group_id=2, tag=0).values_list('name', 'phone').order_by('id')
     namelist = watchkeeper.objects.filter(group_id=1, tag=0).values_list('name', 'phone').order_by('id')
-    namedict = dict(namelist)
-    namedict_lv = dict(namelist_lvzhou)
-    return render(request, 'listpage.html', {'nameList': watch_list, 'namelist': namedict,  'namelist_lvzhou': namedict_lv, 'year': year, 'month': month})
+    name_phone = get_name_phone(namelist)
+    name_phone_lv = get_name_phone(namelist_lvzhou)
+    return render(request, 'listpage.html', {'nameList': watch_list, 'namelist': name_phone,  'namelist_lvzhou':name_phone_lv, 'year': year, 'month': month})
 
 
 @login_required
 def checklist(request):
     namelist = watchkeeper.objects.filter(group_id=1, tag=0).values_list('name', 'phone').order_by('id')
     namelist_lvzhou = watchkeeper.objects.filter(group_id=2, tag=0).values_list('name', 'phone').order_by('id')
-    namedict_lv = dict(namelist_lvzhou)
-    namedict = dict(namelist)
+    name_phone = get_name_phone(namelist)
+    name_phone_lv = get_name_phone(namelist_lvzhou)
 
-    return render(request, 'check.html', {'namelist': namedict, 'namelist_lvzhou': namedict_lv})
+    return render(request, 'check.html', {'namelist': name_phone, 'namelist_lvzhou': name_phone_lv})
 
 
 @login_required

@@ -37,7 +37,8 @@ class watchkeeper(models.Model):
 
 
 class ServiceInfo(models.Model):
-    name = models.CharField(default="", blank=True, verbose_name='服务名称', max_length=30)
+    name = models.CharField(default="", blank=True, verbose_name='服务简写', max_length=30)
+    nickname = models.CharField(default="", blank=True, verbose_name='服务名称', max_length=30)
     packgeName = models.CharField(default="", blank=True, verbose_name='包名称', max_length=50)
 
     def __unicode__(self):

@@ -5,6 +5,7 @@ from models import watchkeeper, serverInfo, ServiceInfo, RunEnv,GroupManage
 
 admin.site.site_header = '盼达运维系统'
 admin.site.site_title = '盼达'
+admin.site.site_url = '/checklist'
 
 
 @admin.register(watchkeeper)
@@ -42,4 +43,4 @@ class serverList(admin.ModelAdmin):
 
 @admin.register(ServiceInfo)
 class ServiceList(admin.ModelAdmin):
-    list_display = ('name', 'packgeName')
+    list_display = ('nickname', 'name', 'packgeName')
