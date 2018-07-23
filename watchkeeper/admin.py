@@ -1,6 +1,6 @@
 # _*_ coding:utf-8 _*_
 from django.contrib import admin
-from models import watchkeeper, serverInfo, ServiceInfo, RunEnv,GroupManage
+from models import watchkeeper, serverInfo, ServiceInfo, RunEnv, GroupManage, ConfigManage
 
 
 admin.site.site_header = '盼达运维系统'
@@ -47,3 +47,11 @@ class ServiceList(admin.ModelAdmin):
     list_display = ('name', 'nickname', 'packgeName', 'comment')
     list_per_page = 15
     search_fields = ('name', 'nickname')
+
+@admin.register(ConfigManage)
+class ConfigList(admin.ModelAdmin):
+    list_display = ('filename', 'app_name', 'content_len', 'config_env', 'pub_date', 'update_time')
+    list_per_page = 20
+    search_fields = ('filename', 'content', 'app_name__name')
+    list_filter = ('config_env',)
+

@@ -1,6 +1,9 @@
 # _*_ coding:utf-8 _*_
 from django.db import models
+import sys
 
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 # Create your models here.
 class GroupManage(models.Model):
@@ -64,7 +67,6 @@ class RunEnv(models.Model):
         verbose_name_plural = '环境管理'
 
 
-
 class watchlist(models.Model):
     name = models.CharField(max_length=30)
     day = models.IntegerField()
@@ -81,8 +83,8 @@ class watchlist(models.Model):
 
 class serverInfo(models.Model):
     nickname = models.CharField(verbose_name='hostname', max_length=20)
-    ip = models.GenericIPAddressField(verbose_name='IP地址')
-    innerip = models.GenericIPAddressField(default='127.0.0.1', null=True, blank=True, verbose_name='内网IP')
+    ip = models.GenericIPAddressField(verbose_name='外网IP')
+    innerip = models.GenericIPAddressField(default='', null=True, blank=True, verbose_name='内网IP')
     # service = models.TextField(verbose_name='运行服务')
     service = models.ManyToManyField(ServiceInfo, blank=True, verbose_name=u'运行服务')
     cpu = models.IntegerField(verbose_name='CPU(核)')
@@ -102,3 +104,27 @@ class serverInfo(models.Model):
 
     def __unicode__(self):
         return self.ip
+
+
+class ConfigManage(models.Model):
+    filename = models.CharField(default="", blank=True, verbose_name='文件名', max_length=50)
+    app_name = models.ForeignKey(ServiceInfo, default="", verbose_name=u'所属服务')
+    content = models.TextField(default="", verbose_name='配置内容')
+    config_env = models.ForeignKey(RunEnv, default="", verbose_name=u'所属环境')
+    pub_date = models.DateTimeField(verbose_name='上传时间', auto_now_add=True)
+    update_time = models.DateTimeField(verbose_name='更新时间', auto_now=True, null=True)
+
+    class Meta:
+        verbose_name = '配置管理'
+        verbose_name_plural = '配置管理'
+
+    def __unicode__(self):
+        return self.filename
+
+    def content_len(self):
+        if len(str(self.content)) > 40:
+            return '{}......'.format(str(self.content)[0:40])
+        else:
+            return str(self.content)
+    content_len.short_description = '配置内容'
+
