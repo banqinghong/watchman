@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.conf import settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -102,3 +103,5 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/admin/login/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'config/')
+MEDIA_URL = '/config/'

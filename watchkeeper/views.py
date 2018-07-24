@@ -1,24 +1,21 @@
 # _*_ coding:utf-8 _*_
 from django.shortcuts import render
-from models import watchkeeper, watchlist
+from models import watchkeeper, watchlist, RunEnv, ServiceInfo
+from watchman import settings
+from function_set import get_name_phone, zip_file
 from django.http import HttpResponse
 import calendar
+import os
 from django.contrib.auth.decorators import login_required
+import sys
 
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 # Create your views here.
 
 def acc_login(request):
     return render(request, 'login.html')
-
-
-def get_name_phone(name_phone_list):
-    name_phone_result = []
-    for i in range(len(name_phone_list)):
-        name_phone_link = name_phone_list[i][0] + ':' + name_phone_list[i][1]
-        name_phone_result.append(name_phone_link)
-    return name_phone_result
-
 
 
 @login_required
@@ -36,6 +33,33 @@ def addwatchman(request):
     phonenum = request.POST.get('phone')
     watchkeeper.objects.update_or_create(name=name, phone=phonenum, tag=0)
     return render(request, 'ksuccess.html', {'name': name, 'phone': phonenum})
+
+
+@login_required
+def bulk_down_page(request):
+    role_list = RunEnv.objects.values_list('env_name', flat=True)
+    service_list = ServiceInfo.objects.values_list('name', flat=True)
+    return render(request, 'bulk_down.html', {'role_list': role_list, 'service_list': service_list})
+
+
+@login_required
+def bulk_down(request):
+    role = request.POST.get('role')
+    service = request.POST.get('service')
+    tmp_dir = os.path.join(settings.BASE_DIR, 'tmp')
+    input_file = os.path.join(settings.MEDIA_ROOT, str(role), str(service))
+    output_name = '{0}-{1}'.format(str(role), str(service))
+    unicode_input_file = unicode(input_file, "utf-8")
+    unicode_tmp_dir = unicode(tmp_dir, "utf-8")
+    unicode_output_name = unicode(output_name, "utf-8")
+    try:
+        os.chdir(input_file)
+        zip_file(unicode_input_file, unicode_tmp_dir, unicode_output_name)
+        return_name = str(role)+str(service)
+    except WindowsError:
+        return_name = '{} 环境中不存在 {} 项目'.format(role, service)
+
+    return HttpResponse(return_name)
 
 
 @login_required

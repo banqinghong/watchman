@@ -20,5 +20,7 @@
     python manage.py migrate <br>
 3.创建超级用户<br>
     python manage.py createsuperuser <br>
-4.启动项目 <br>
+4.修改base.html <br />
+    将django\contrib\admin\templates\admin中的base.html替换为templates\static\base.html文件 <br>
+5.启动项目 <br>
     python manage.py runserver YOUR_IP:YOUR_PORT  <br>

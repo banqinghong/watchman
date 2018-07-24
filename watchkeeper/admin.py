@@ -50,7 +50,7 @@ class ServiceList(admin.ModelAdmin):
 
 @admin.register(ConfigManage)
 class ConfigList(admin.ModelAdmin):
-    list_display = ('filename', 'app_name', 'content_len', 'config_env', 'pub_date', 'update_time')
+    list_display = ('filename', 'app_name', 'content_len', 'content_file', 'config_env', 'pub_date', 'update_time')
     list_per_page = 20
     search_fields = ('filename', 'content', 'app_name__name')
     list_filter = ('config_env',)
