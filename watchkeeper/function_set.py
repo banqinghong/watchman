@@ -11,6 +11,7 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 
+#  将生成的形如[(name1,phone1),...]的用户电话列表转换成['name1:phone1',...]的列表
 def get_name_phone(name_phone_list):
     name_phone_result = []
     for i in range(len(name_phone_list)):
@@ -19,6 +20,8 @@ def get_name_phone(name_phone_list):
     return name_phone_result
 
 
+#  此函数用于压缩一个目录中的所有文件
+#  传入需要下载的文件路径，压缩后路径，以及压缩后文件名
 def zip_file(source_path, output_path, output_name):
     os.chdir(source_path)
     workdir = '.'

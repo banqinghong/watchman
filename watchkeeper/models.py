@@ -1,11 +1,16 @@
 # _*_ coding:utf-8 _*_
 from django.db import models
 import sys
+import os
+from watchman import settings
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+
 # Create your models here.
+
+#  组织机构管理
 class GroupManage(models.Model):
     group_name = models.CharField(default="", blank=True, verbose_name='组名', max_length=30)
     comment = models.TextField(default="", blank=True, verbose_name='备注')
@@ -18,6 +23,7 @@ class GroupManage(models.Model):
         verbose_name_plural = '组织管理'
 
 
+#  运维值班人员管理
 class watchkeeper(models.Model):
     tag_default = 0
     tag_need_not = 1
@@ -41,6 +47,7 @@ class watchkeeper(models.Model):
         verbose_name_plural = '人员管理'
 
 
+#  服务管理模块
 class ServiceInfo(models.Model):
     name = models.CharField(default="", blank=True, verbose_name='服务名称', max_length=30)
     nickname = models.CharField(default="", blank=True, verbose_name='服务简写', max_length=30)
@@ -55,6 +62,7 @@ class ServiceInfo(models.Model):
         verbose_name_plural = '服务管理'
 
 
+#  运行环境
 class RunEnv(models.Model):
     env_name = models.CharField(default="stage", blank=True, verbose_name='运行环境', max_length=30)
     comment = models.TextField(default="", blank=True, verbose_name='备注')
@@ -67,6 +75,7 @@ class RunEnv(models.Model):
         verbose_name_plural = '环境管理'
 
 
+#  记录值班信息
 class watchlist(models.Model):
     name = models.CharField(max_length=30)
     day = models.IntegerField()
@@ -81,6 +90,7 @@ class watchlist(models.Model):
         return self.name
 
 
+#  主机管理
 class serverInfo(models.Model):
     nickname = models.CharField(verbose_name='hostname', max_length=20)
     ip = models.GenericIPAddressField(verbose_name='外网IP')
@@ -97,6 +107,7 @@ class serverInfo(models.Model):
         verbose_name = '主机管理'
         verbose_name_plural = '主机管理'
 
+    # 主机上运行服务为多对多，利用自定义field获取，服务之间用，隔开
     def get_service(self):
         return ",".join([p.name for p in self.service.all()])
 
@@ -106,15 +117,18 @@ class serverInfo(models.Model):
         return self.ip
 
 
+#  用于生成filefield中的update_to参数
 def file_update_path(instance, filename):
-    return '{0}/{1}/{2}'.format(str(instance.config_env), str(instance.app_name), str(filename))
+    file_path = '{0}/{1}/{2}'.format(str(instance.config_env), str(instance.app_name), str(filename))
+    return file_path
 
 
+#  配置文件管理
 class ConfigManage(models.Model):
     filename = models.CharField(default="", blank=True, verbose_name='文件名', max_length=50)
     app_name = models.ForeignKey(ServiceInfo, default="", verbose_name=u'所属服务')
     content = models.TextField(default="", verbose_name='配置内容')
-    content_file = models.FileField(upload_to=file_update_path, null=True, verbose_name='配置文件')
+    content_file = models.FileField(upload_to=file_update_path, null=True, blank=True, verbose_name='配置文件')
     config_env = models.ForeignKey(RunEnv, default="", verbose_name=u'所属环境')
     pub_date = models.DateTimeField(verbose_name='上传时间', auto_now_add=True)
     update_time = models.DateTimeField(verbose_name='更新时间', auto_now=True, null=True)
@@ -126,10 +140,11 @@ class ConfigManage(models.Model):
     def __unicode__(self):
         return self.filename
 
+    #  配置文件显示40个字符
     def content_len(self):
         if len(str(self.content)) > 40:
             return '{}......'.format(str(self.content)[0:40])
         else:
             return str(self.content)
-    content_len.short_description = '配置内容'
 
+    content_len.short_description = '配置内容'

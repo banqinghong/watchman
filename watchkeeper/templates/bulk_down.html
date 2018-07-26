@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>批量下载配置文件</title>
+    <title>配置文件上传下载</title>
     <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
     <link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css" />
     <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
@@ -26,7 +26,26 @@
     </div>
 </div>
 <br>
-<h2>选择下载文件</h2>
+<h2>上传配置文件</h2>
+<form enctype="multipart/form-data" action="/update_file" method="POST">
+    <select name="role">
+        <option>--选择环境--</option>
+        {% for role in role_list %}
+        <option value="{{role}}"> {{role}}</option>
+        {% endfor %}
+    </select>
+    <select name="service">
+        <option>--选择服务--</option>
+        {% for service in service_list %}
+        <option value="{{service}}"> {{service}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <input type="file" name="my_file" />
+    <input type="submit" value="上传">
+</form>
+
+<h2>下载配置文件</h2>
 <form action="/bulk_down" method="POST">
     <select name="role">
         <option>--选择环境--</option>

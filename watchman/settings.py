@@ -103,5 +103,6 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/admin/login/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'config/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'config')
 MEDIA_URL = '/config/'
+TMP_DIR = os.path.join(BASE_DIR, 'tmp')

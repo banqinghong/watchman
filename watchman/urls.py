@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^delwatchkeeper/$', myviews.delwatchman, name='delwatchkeeper'),
     url(r'^down_page/$', myviews.bulk_down_page, name='down_page'),
     url(r'^bulk_down$', myviews.bulk_down, name='bulk_down'),
+    url(r'^update_file$', myviews.config_upload, name='config_upload'),
     url(r'^$', myviews.checklist, name='index'),
     url(r'^config/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
