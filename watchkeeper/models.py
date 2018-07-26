@@ -128,7 +128,7 @@ class ConfigManage(models.Model):
     filename = models.CharField(default="", blank=True, verbose_name='文件名', max_length=50)
     app_name = models.ForeignKey(ServiceInfo, default="", verbose_name=u'所属服务')
     content = models.TextField(default="", verbose_name='配置内容')
-    content_file = models.FileField(upload_to=file_update_path, null=True, blank=True, verbose_name='配置文件')
+    #content_file = models.FileField(upload_to=file_update_path, null=True, blank=True, verbose_name='配置文件')
     config_env = models.ForeignKey(RunEnv, default="", verbose_name=u'所属环境')
     pub_date = models.DateTimeField(verbose_name='上传时间', auto_now_add=True)
     update_time = models.DateTimeField(verbose_name='更新时间', auto_now=True, null=True)
