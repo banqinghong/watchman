@@ -21,6 +21,7 @@
         </div>
         <div id="user-tools">
             <a href="/admin">运维管理</a> /
+            <a href="/addpage">值班表管理</a> /
             <a href="/checklist">值班表查看</a>
         </div>
     </div>
@@ -41,16 +42,32 @@
   <td>星期五</td>
   <td>星期六</td>
   <td>星期日</td>
+    <td> 绿洲值班人员</td>
 </tr>
-  <tr>
   {% for key in nameList %}
-  {% if key == "space" %}<td>&nbsp;</td>
-    {% elif key == "enter" %} </tr><tr>
-  {% else %} <td>{{ key }}</td>
-  {% endif %}
+      {% if key == "space" %}<td>&nbsp;</td>
+      {% elif key == "enter" %}</tr><tr>
+      {% else %} <td>{{ key }}</td>
+      {% endif %}
   {% endfor %}
 </tr>
 </table>
+
+<br>-----------------------------------------
+<p>小盼值班人员信息：<p>
+<ol>
+    {%for name in namelist %}
+    <li>{{name}}</li>
+    {% endfor %}
+</ol>
+<br>-----------------------------------------
+<p>绿洲值班人员信息：<p>
+<ol>
+    {%for name_lv in namelist_lvzhou %}
+    <li>{{name_lv}}</li>
+    {% endfor %}
+</ol>
+
 {%comment%}
 <br>-----------------------------------------
 <p>查看值班表<p>

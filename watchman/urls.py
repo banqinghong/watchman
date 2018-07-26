@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from watchkeeper import views as myviews
-from watchkeeper import configManage as myconfig
+from django.views.static import serve
+from watchman import settings
 
 
 urlpatterns = [
@@ -25,8 +26,11 @@ urlpatterns = [
     url(r'^addwatchkeeper/$', myviews.addwatchman, name='addwatchkeeper'),
     url(r'^addwatchlist/$', myviews.addwatchlist, name='addwatchlist'),
     url(r'^listwatch/$', myviews.listwatchman, name='listwatch'),
-    url(r'^checklist/$', myviews.checklist, name='listwatch'),
-    url(r'^deletelist/$', myviews.deletelist, name='listwatch'),
+    url(r'^checklist/$', myviews.checklist, name='checklist'),
+    url(r'^deletelist/$', myviews.deletelist, name='deletelist'),
     url(r'^delwatchkeeper/$', myviews.delwatchman, name='delwatchkeeper'),
+    url(r'^down_page/$', myviews.bulk_down_page, name='down_page'),
+    url(r'^bulk_down$', myviews.bulk_down, name='bulk_down'),
     url(r'^$', myviews.checklist, name='index'),
+    url(r'^config/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
 ]

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from django.conf import settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +26,7 @@ SECRET_KEY = '8=0q_74mpe=uw^s^aod@rb5bgj9%!wi#sjzdlxg1k++z3t+vk-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.0.87']
 
 
 # Application definition
@@ -102,3 +103,5 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/admin/login/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'config/')
+MEDIA_URL = '/config/'

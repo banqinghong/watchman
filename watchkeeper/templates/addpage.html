@@ -21,7 +21,7 @@
         </div>
         <div id="user-tools">
             <a href="/admin">运维管理</a> /
-            <a href="/addpage">值班表管理</a>
+            <a href="/checklist">值班表查看</a>
         </div>
     </div>
 </div>
@@ -55,7 +55,8 @@
 <form action="/addwatchlist/" method="POST">
     年份: <input type="text" name="year">
     月份: <input type="text" name="month">
-    值班起始人编号:<input type="text" name="num">
+    小盼值班起始人编号:<input type="text" name="num">
+    绿洲值班起始人编号:<input type="text" name="num_lv">
     <input type="submit" value="提交">
 </form>
 <br>-----------------------------------------<br>
@@ -67,10 +68,19 @@
 </form>
 <br>----------------------------------------<br>
 {%endcomment%}
-<b>值班人员如下：</b><br>
-{%for name in namelist %}
-    {{name}}<br>
-{% endfor %}
-<!{{namelist}}>
+<p>小盼值班人员信息：<p>
+<ol>
+    {%for name in namelist %}
+    <li>{{name}}</li>
+    {% endfor %}
+</ol>
+<br>-----------------------------------------
+<p>绿洲值班人员信息：<p>
+<ol>
+    {%for name_lv in namelist_lvzhou %}
+    <li>{{name_lv}}</li>
+    {% endfor %}
+</ol>
+</ol>
 </body>
 </html>

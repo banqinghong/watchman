@@ -33,9 +33,18 @@
     <input type="submit" value="提交">
 </form>
 <br>-----------------------------------------
-<p>值班人员如下：<p>
+<p>小盼值班人员信息：<p>
+    <ol>
 {%for name in namelist %}
-    {{name}}<br>
+    <li>{{name}}</li>
 {% endfor %}
+    </ol>
+    <br>-----------------------------------------
+<p>绿洲值班人员信息：<p>
+    <ol>
+    {%for name_lv in namelist_lvzhou %}
+    <li>{{name_lv}}</li>
+    {% endfor %}
+    </ol>
 </body>
 </html>
