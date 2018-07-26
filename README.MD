@@ -19,6 +19,10 @@
 
 ![image](https://github.com/banqinghong/watchman/blob/master/docs/3.png)
 
+# 配置文件上传下载页面：
+
+![image](https://github.com/banqinghong/watchman/blob/master/docs/4.png)
+
 # 部署注意：
 1.修改settings.py中的ALLOWED_HOSTS以及DATABASES <br>
 2.进入项目目录，初始化数据库 <br>
