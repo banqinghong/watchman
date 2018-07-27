@@ -64,15 +64,19 @@ def config_upload(request):
     if os.path.exists(config_path_store):
         os.remove(config_path_store)
     if not os.path.exists(config_path_dir):
-        os.mkdir(config_path_dir)
+        os.makedirs(config_path_dir)
     file_write = open(config_path_store, 'wb+')
     for chunk in my_files.chunks():
         file_write.write(chunk)
     file_write.close()
     file_read = open(config_path_store, 'r')
     content = file_read.read()
-    ConfigManage.objects.update_or_create(filename=my_files.name, app_name_id=service_id, config_env_id=role_id, content=content)
-    return HttpResponse(u'上传成功')
+    config_filter = ConfigManage.objects.filter(filename=my_files.name, app_name_id=service_id, config_env_id=role_id)
+    if config_filter:
+        config_filter.update(content=content)
+    else:
+        ConfigManage.objects.create(filename=my_files.name, app_name_id=service_id, config_env_id=role_id, content=content)
+    return render(request, 'update_success.html')
 
 
 @login_required
