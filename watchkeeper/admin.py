@@ -3,6 +3,7 @@ from django.contrib import admin
 import os
 from watchman import settings
 from models import watchkeeper, serverInfo, ServiceInfo, RunEnv, GroupManage, ConfigManage
+from function_set import mkdir
 
 
 admin.site.site_header = '盼达运维系统'
@@ -58,4 +59,28 @@ class ConfigList(admin.ModelAdmin):
     search_fields = ('filename', 'content', 'app_name__name')
     list_filter = ('config_env',)
 
+    #  如果修改了数据，那么将之前的文件删除
+    def save_model(self, request, obj, form, change):
+        if change:
+            role = RunEnv.objects.get(id=obj.config_env_id).env_name
+            service = ServiceInfo.objects.get(id=obj.app_name_id).name
+            # content = self.model.objects.get(pk=obj.pk).content
+            filename = self.model.objects.get(pk=obj.pk).filename
+            config_path_file = os.path.join(settings.MEDIA_ROOT, role, service, filename)
+            if os.path.exists(config_path_file):
+                os.remove(config_path_file)
 
+        super(ConfigList, self).save_model(request, obj, form, change)
+
+    # 如果删除一条数据，那么将该数据对应的文件删除
+    def delete_model(self, request, obj):
+        role = RunEnv.objects.get(id=obj.config_env_id).env_name
+        service = ServiceInfo.objects.get(id=obj.app_name_id).name
+        # content = self.model.objects.get(pk=obj.pk).content
+        filename = self.model.objects.get(pk=obj.pk).filename
+        # config_path_dir = os.path.join(settings.MEDIA_ROOT, role, service)
+        config_path_file = os.path.join(settings.MEDIA_ROOT, role, service, filename)
+        if os.path.exists(config_path_file):
+            os.remove(config_path_file)
+
+        super(ConfigList, self).delete_model(request, obj)

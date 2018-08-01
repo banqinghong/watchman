@@ -3,6 +3,8 @@ from django.db import models
 import sys
 import os
 from watchman import settings
+from function_set import mkdir
+from django.db.models import signals
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -64,7 +66,7 @@ class ServiceInfo(models.Model):
 
 #  运行环境
 class RunEnv(models.Model):
-    env_name = models.CharField(default="stage", blank=True, verbose_name='运行环境', max_length=30)
+    env_name = models.CharField(default="", blank=True, verbose_name='运行环境', max_length=30)
     comment = models.TextField(default="", blank=True, verbose_name='备注')
 
     def __unicode__(self):
@@ -148,3 +150,20 @@ class ConfigManage(models.Model):
             return str(self.content)
 
     content_len.short_description = '配置内容'
+
+
+#  保存或新增后，将content写入文件中便于下载
+def save_content_to_file(sender, instance, **kwargs):
+    filename = instance.filename
+    content = instance.content
+    role = RunEnv.objects.get(id=instance.config_env_id).env_name
+    service = ServiceInfo.objects.get(id=instance.app_name_id).name
+    config_path_dir = os.path.join(settings.MEDIA_ROOT, role, service)
+    config_path_file = os.path.join(settings.MEDIA_ROOT, role, service, filename)
+    mkdir(config_path_dir)
+    f = open(config_path_file, 'wb')
+    f.write(content)
+    f.close()
+
+
+signals.post_save.connect(save_content_to_file, sender=ConfigManage)

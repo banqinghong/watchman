@@ -1,6 +1,6 @@
 # _*_ coding:utf-8 _*_
 from django.shortcuts import render
-from models import watchkeeper, watchlist
+#from models import watchkeeper,watchlist
 from django.http import HttpResponse
 import calendar
 import os
@@ -35,6 +35,13 @@ def zip_file(source_path, output_path, output_name):
         z.close()
     return output_file
 
+
+#  判断目录是否存在，不存在则创建
+def mkdir(path):
+    if os.path.exists(path):
+        return u'目录存在'
+    else:
+        os.mkdir(path)
 
 
 

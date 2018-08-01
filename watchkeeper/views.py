@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from models import watchkeeper, watchlist, RunEnv, ServiceInfo, ConfigManage
 from watchman import settings
-from function_set import get_name_phone, zip_file
+from function_set import get_name_phone, zip_file, mkdir
 from django.http import HttpResponse, StreamingHttpResponse
 import calendar
 import os
@@ -17,13 +17,6 @@ sys.setdefaultencoding("utf-8")
 
 def acc_login(request):
     return render(request, 'login.html')
-
-
-def mkdir(path):
-    if os.path.exists(path):
-        return u'目录存在'
-    else:
-        os.mkdir(path)
 
 
 @login_required
