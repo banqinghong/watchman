@@ -167,3 +167,16 @@ def save_content_to_file(sender, instance, **kwargs):
 
 
 signals.post_save.connect(save_content_to_file, sender=ConfigManage)
+
+
+def delete_config_file(sender, instance, **kwargs):
+    filename = instance.filename
+    role = RunEnv.objects.get(id=instance.config_env_id).env_name
+    service = ServiceInfo.objects.get(id=instance.app_name_id).name
+    # config_path_dir = os.path.join(settings.MEDIA_ROOT, role, service)
+    config_path_file = os.path.join(settings.MEDIA_ROOT, role, service, filename)
+    if os.path.exists(config_path_file):
+        os.remove(config_path_file)
+
+
+signals.post_delete.connect(delete_config_file, sender=ConfigManage)

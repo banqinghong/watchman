@@ -66,6 +66,8 @@ class ConfigList(admin.ModelAdmin):
             service = ServiceInfo.objects.get(id=obj.app_name_id).name
             # content = self.model.objects.get(pk=obj.pk).content
             filename = self.model.objects.get(pk=obj.pk).filename
+            config_path_dir = os.path.join(settings.MEDIA_ROOT, role, service)
+            mkdir(config_path_dir)
             config_path_file = os.path.join(settings.MEDIA_ROOT, role, service, filename)
             if os.path.exists(config_path_file):
                 os.remove(config_path_file)

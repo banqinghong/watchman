@@ -41,7 +41,7 @@ def mkdir(path):
     if os.path.exists(path):
         return u'目录存在'
     else:
-        os.mkdir(path)
+        os.makedirs(path)
 
 
 
